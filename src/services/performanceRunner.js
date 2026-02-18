@@ -7,7 +7,7 @@ export const runPerformanceTests = (baseUrl) => {
     const scriptPath = path.resolve("tests/performance/load-test.js");
     const summaryPath = path.resolve("summary.json");
 
-    const command = `k6 run --summary-export="${summaryPath}" "${scriptPath}"`;
+    const command = `./k6 run ${scriptPath}`;
 
     exec(
       command,

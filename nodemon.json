@@ -1,0 +1,3 @@
+{
+  "ignore": ["summary.json", "tests/performance/*"]
+}

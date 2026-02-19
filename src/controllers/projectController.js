@@ -84,21 +84,14 @@ export const runUITestForProject = async (req, res) => {
     project.status = "Testing";
     await project.save();
 
-    const results = await runUITests(project.baseUrl);
+    const runnerResponse = await runUITests(project.baseUrl);
 
-    // Normalize Playwright results
-    const summary = {
-      total: results.stats.expected,
-      passed: results.stats.expected - results.stats.unexpected,
-      failed: results.stats.unexpected,
-      duration: results.stats.duration,
-    };
+    // Use summary returned by runner
+    const summary = runnerResponse.summary || runnerResponse;
 
-    // Save normalized results
     project.results.ui = summary;
     await project.save();
 
-    // Return normalized summary (NOT raw Playwright JSON)
     res.json({
       message: "UI tests executed",
       results: summary,
